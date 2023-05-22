@@ -291,7 +291,6 @@ class MainLevel extends Scene {
       //
       // HOW TO START A NEW GAME
       //
-      new Game(mainLevel);
     }
   }
 }
@@ -301,3 +300,10 @@ class MainLevel extends Scene {
 /* -------------------------------------------------------------------------- */
 let mainLevel = new MainLevel();
 let game = new Game(mainLevel);
+
+
+// TODO
+// - HOW TO START A NEW GAME
+// - HOW TO STOP A GAME
+// 
+// - FLAPPY TO BE A ANIMATED
