@@ -269,4 +269,16 @@ export class Game {
     this.isRunning = false;
     cancelAnimationFrame(this.id);
   }
+
+  start() {
+    this.isRunning = true;
+    this.id = requestAnimationFrame(() => {
+      this.gameLoop();
+    });
+  }
+
+  changeScene(scene: Scene) {
+    this.scene = scene;
+    this.scene.create();
+  }
 }

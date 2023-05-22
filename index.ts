@@ -287,7 +287,8 @@ class NewGameButton extends GameObject {
 
     if (this.command == 'CLICK') {
       game.stop();
-      game = new Game(new MainLevel());
+      game.changeScene(new MainLevel());
+      game.start();
     }
   }
 
@@ -538,13 +539,15 @@ class MainLevel extends Scene {
   birdHitWall(bird) {
     if (bird.y > canvas.height) {
       game.stop();
-      game = new Game(new GameOverLevel(this.score.score));
+      game.changeScene(new GameOverLevel(this.score.score));
+      game.start();
     }
   }
 
   birdHitPipe() {
     game.stop();
-    game = new Game(new GameOverLevel(this.score.score));
+    game.changeScene(new GameOverLevel(this.score.score));
+    game.start();
   }
 }
 
@@ -555,9 +558,6 @@ let startLevel = new StartLevel();
 let game = new Game(startLevel);
 
 // TODO
-//
-// - START SCREEN
-// - GAME OVER SCREEN
 //
 // - PICO PLANET HERE
 //
