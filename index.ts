@@ -301,9 +301,15 @@ class MainLevel extends Scene {
 let mainLevel = new MainLevel();
 let game = new Game(mainLevel);
 
-
 // TODO
 // - HOW TO START A NEW GAME
 // - HOW TO STOP A GAME
-// 
+//
 // - FLAPPY TO BE A ANIMATED
+// - SCORE KEEPING
+// - START SCREEN
+// - GAME OVER SCREEN
+//
+// - PICO PLANET HERE
+// - NEW IMAGE AS BACKGROUND
+//
