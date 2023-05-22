@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@900&display=swap');
+
 canvas {
   display: block;
   position: absolute;
@@ -17,7 +19,7 @@ html {
 }
 
 body {
-  background: -webkit-linear-gradient(top, #2d9a59, #23729a);
+  background: -webkit-linear-gradient(top, #23729a, #008802);
   text-align: center;
 }
 

@@ -8,7 +8,9 @@ export const ctx = canvas.getContext('2d');
 canvas.setAttribute('tabindex', '1');
 canvas.style.outline = 'none';
 canvas.focus();
-const COLOR_BACKGROUND: string = '#000';
+const BACKGROUND: string =
+  'https://static.vecteezy.com/system/resources/thumbnails/009/877/673/small_2x/pixel-art-sky-background-with-clouds-cloudy-blue-sky-for-8bit-game-on-white-background-vector.jpg'; //or could be #000
+//const BACKGROUND: string = '#000';
 
 // utility functions to use everywhere
 export class Util {
@@ -132,22 +134,22 @@ export class Physics {
   update() {
     for (let collisionEntry of this.gameObjectCollisionRegister) {
       if (
-        collisionEntry.objectA.x > 0 &&
-        collisionEntry.objectA.x < canvas.width &&
-        collisionEntry.objectA.y > 0 &&
-        collisionEntry.objectA.y < canvas.height &&
-        collisionEntry.objectB.x > 0 &&
-        collisionEntry.objectB.x < canvas.width &&
-        collisionEntry.objectB.y > 0 &&
-        collisionEntry.objectB.y < canvas.height &&
-        collisionEntry.objectA.x <
-          collisionEntry.objectB.x + collisionEntry.objectB.width &&
+        collisionEntry.objectA.x >= 0 &&
+        collisionEntry.objectA.x <= canvas.width &&
+        collisionEntry.objectA.y >= 0 &&
+        collisionEntry.objectA.y <= canvas.height &&
+        collisionEntry.objectB.x >= 0 &&
+        collisionEntry.objectB.x <= canvas.width &&
+        collisionEntry.objectB.y >= 0 &&
+        collisionEntry.objectB.y <= canvas.height &&
         collisionEntry.objectA.x + collisionEntry.objectA.width >
           collisionEntry.objectB.x &&
-        collisionEntry.objectA.y <
-          collisionEntry.objectB.y + collisionEntry.objectB.height &&
+        collisionEntry.objectA.x + collisionEntry.objectA.width <
+          collisionEntry.objectB.x + collisionEntry.objectB.width &&
         collisionEntry.objectA.y + collisionEntry.objectA.height >
-          collisionEntry.objectB.y
+          collisionEntry.objectB.y &&
+        collisionEntry.objectA.y <
+          collisionEntry.objectB.y + collisionEntry.objectB.height
       ) {
         collisionEntry.callback.apply(collisionEntry.scope, [
           collisionEntry.objectA,
@@ -211,12 +213,16 @@ export class Scene {
   render() {
     // update the game background
 
-    //ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //canvas.width = canvas.width;
-    let backgroundImage = new Image();
-    backgroundImage.src =
-      'https://static.vecteezy.com/system/resources/thumbnails/009/877/673/small_2x/pixel-art-sky-background-with-clouds-cloudy-blue-sky-for-8bit-game-on-white-background-vector.jpg';
-    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    if (BACKGROUND.startsWith('#')) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      canvas.width = canvas.width;
+      ctx.fillStyle = BACKGROUND;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    } else {
+      let backgroundImage = new Image();
+      backgroundImage.src = BACKGROUND;
+      ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    }
 
     for (let gameObject of this.children) {
       if (gameObject) gameObject.render();
@@ -230,6 +236,7 @@ export class Scene {
 export class Game {
   private scene: Scene;
   private id: number;
+  private isRunning: boolean = true;
 
   constructor(scene: Scene) {
     this.scene = scene;
@@ -251,8 +258,15 @@ export class Game {
 
     // call next frame
     cancelAnimationFrame(this.id);
-    this.id = requestAnimationFrame(() => {
-      this.gameLoop();
-    });
+    if (this.isRunning) {
+      this.id = requestAnimationFrame(() => {
+        this.gameLoop();
+      });
+    }
+  }
+
+  stop() {
+    this.isRunning = false;
+    cancelAnimationFrame(this.id);
   }
 }
