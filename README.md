@@ -39,7 +39,7 @@ To run the game locally, follow these steps:
 
 ## Credits
 
-This game is developed by [Your Name]. Special thanks to the creators of the original Flappy Bird game for the inspiration.
+This game is developed by Ryan Zielke. Special thanks to the creators of the original Flappy Bird game for the inspiration.
 
 ## License
 
