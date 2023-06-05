@@ -10,7 +10,7 @@ canvas.style.outline = 'none';
 canvas.focus();
 const BACKGROUND: string =
   'https://static.vecteezy.com/system/resources/thumbnails/009/877/673/small_2x/pixel-art-sky-background-with-clouds-cloudy-blue-sky-for-8bit-game-on-white-background-vector.jpg'; //or could be #000
-//const BACKGROUND: string = '#000';
+// const BACKGROUND: string = '#000';
 
 // utility functions to use everywhere
 export class Util {
@@ -174,15 +174,88 @@ export class Physics {
   }
 }
 
+class AnimationManager {
+  private manager: any = {};
+
+  constructor() {}
+
+  add(key: string, gameObject: GameObject) {
+    if (!this.manager[key]) {
+      this.manager[key] = {};
+    }
+    this.manager[key].gameObject = gameObject;
+  }
+
+  createFromPiskel(key: string, sprite: any) {
+    if (!this.manager[key]) {
+      this.manager[key] = {};
+    }
+    let spriteLayer = JSON.parse(sprite.piskel.layers[0]);
+    this.manager[key].configuration = {
+      img: new Image(),
+      framesPerRow: spriteLayer.chunks[0].layout.length,
+      numOfRows: spriteLayer.chunks[0].layout[0].length,
+      frameWidth: sprite.piskel.width,
+      frameHeight: sprite.piskel.height,
+      fps: sprite.piskel.fps,
+      lastTimestamp: new Date(),
+      frameIndex: 0,
+    };
+    this.manager[key].configuration.img.src = spriteLayer.chunks[0].base64PNG;
+    this.manager[key].configuration.timestep =
+      1000 / this.manager[key].configuration.fps; // ms for each frame
+  }
+
+  play(key: string) {
+    let timestamp = new Date();
+    this.animate(key, timestamp);
+  }
+
+  animate(key: string, timestamp: Date) {
+    if (
+      this.manager[key] &&
+      this.manager[key].gameObject &&
+      this.manager[key].configuration
+    ) {
+      let config = this.manager[key].configuration;
+      if (
+        timestamp.valueOf() - config.lastTimestamp.valueOf() >
+        config.timestep
+      ) {
+        config.frameIndex++;
+        config.lastTimestamp = timestamp;
+      }
+
+      config.frameIndex =
+        config.frameIndex > config.framesPerRow - 1 ? 0 : config.frameIndex;
+
+      ctx.drawImage(
+        config.img,
+        (config.frameIndex % config.framesPerRow) * config.frameWidth,
+        Math.floor(config.frameIndex / config.framesPerRow) *
+          config.frameHeight,
+        config.frameWidth,
+        config.frameHeight,
+        this.manager[key].gameObject.x,
+        this.manager[key].gameObject.y,
+        config.frameWidth,
+        config.frameHeight
+      );
+    }
+  }
+}
+
 export class Scene {
   public children: Array<GameObject>;
   public groups: Array<Group>;
   public physics: Physics;
+  public anims: AnimationManager;
 
   constructor() {
     this.children = [];
     this.groups = [];
     this.physics = new Physics();
+    this.anims = new AnimationManager();
   }
 
   add(object: Group): void;
