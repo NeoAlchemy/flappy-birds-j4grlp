@@ -1,0 +1,14 @@
+{
+  "modelVersion": 2,
+  "piskel": {
+    "name": "TRPipeTile",
+    "description": "",
+    "fps": 12,
+    "height": 32,
+    "width": 32,
+    "layers": [
+      "{\"name\":\"Layer 1\",\"opacity\":1,\"frameCount\":1,\"chunks\":[{\"layout\":[[0]],\"base64PNG\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAJVJREFUWEdj5PRi+M8wgIBxwB3Qc21gQqC2BBLsjAPuAJkpAxMCb7dBQ2DYOKDACeKjCfsgNC4+LMPB0wC1QmDAHQDzGSGf0ywEBtwBAx4FA+6AAY+CAXfAgEfBgDtgwKNgwB0w4FEw4A4Y8CgYcAcMeBQMuAMGPAoG3AEDHgVkO2DAu2YjxgHftzEwYuuE0613jMsBAHoXpb2yPCBbAAAAAElFTkSuQmCC\"}]}"
+    ],
+    "hiddenFrames": [""]
+  }
+}

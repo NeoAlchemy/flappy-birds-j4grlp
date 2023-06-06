@@ -1,0 +1,14 @@
+{
+  "modelVersion": 2,
+  "piskel": {
+    "name": "TRUpsideDownPipeTile",
+    "description": "",
+    "fps": 12,
+    "height": 32,
+    "width": 32,
+    "layers": [
+      "{\"name\":\"Layer 1\",\"opacity\":1,\"frameCount\":1,\"chunks\":[{\"layout\":[[0]],\"base64PNG\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAIpJREFUWEdj5PRi+M9AB/B9GwMjNmsYR4wDcAUy3UIApwNkplAnDRQ4QayYsA9C4+LDHFJbAmExDhsHwHxGyOc0C4EBd8BoGhjwKBhwB4ymgQGPggF3wGgaGPAoGHAHjKaBAY+CAXfAaBogtXP1dhuVW8VkO6DnGnX6BaQ6AN4vGHAH0KtzOmj7hgBmzKW9AISKgAAAAABJRU5ErkJggg==\"}]}"
+    ],
+    "hiddenFrames": [""]
+  }
+}

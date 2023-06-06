@@ -20,6 +20,17 @@ export class Util {
     // The maximum is inclusive and the minimum is inclusive
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
+
+  static getTextureFromPiskel(sprite: any): any {
+    let spriteLayer = JSON.parse(sprite.piskel.layers[0]);
+    let aImg: HTMLImageElement = new Image();
+    aImg.setAttribute('src', spriteLayer.chunks[0].base64PNG);
+    return {
+      image: aImg,
+      width: sprite.piskel.width,
+      height: sprite.piskel.height,
+    };
+  }
 }
 
 // Input Controller to use everywhere

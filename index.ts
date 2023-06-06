@@ -9,6 +9,11 @@ import {
   Game,
 } from './pico-planet';
 
+import TopLeftPipeTile from './TLPipeTile.piskel.json';
+import TopRightPipeTile from './TRPipeTile.piskel.json';
+import TopLeftUpsideDownPipeTile from './TLUpsideDownPipeTile.piskel.json';
+import TopRightUpsideDownPipeTile from './TRUpsideDownPipeTile.piskel.json';
+import FlappyBird from './FlappyBird.piskel.json';
 // Import stylesheets
 import './style.css';
 
@@ -34,18 +39,6 @@ const COLOR_BUTTON: string = '#F00';
 
 /* --------------------------------- ENTITIES ------------------------------- */
 class Pipe extends GameObject {
-  private TLPipeTile =
-    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAHBJREFUWEdj5PRi+M8wgIBx0DiguWdgggEeAgPuAGEv4kKgwIk4dTBVE/bhVw8PgQF3AK4oQPcBuSGArg9mLsE0MOqA0RAYDYHREBgNgdEQGA2B0RAYDYHREKBbCJDW2qee6oHvG+LyC706rYwD7QAAevW9N+4Q0b0AAAAASUVORK5CYII=';
-
-  private TRPipeTile =
-    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAJVJREFUWEdj5PRi+M8wgIBxwB3Qc21gQqC2BBLsjAPuAJkpAxMCb7dBQ2DYOKDACeKjCfsgNC4+LMPB0wC1QmDAHQDzGSGf0ywEBtwBAx4FA+6AAY+CAXfAgEfBgDtgwKNgwB0w4FEw4A4Y8CgYcAcMeBQMuAMGPAoG3AEDHgVkO2DAu2YjxgHftzEwYuuE0613jMsBAHoXpb2yPCBbAAAAAElFTkSuQmCC';
-
-  private TRUpsideDownPipeTile =
-    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAIpJREFUWEdj5PRi+M9AB/B9GwMjNmsYR4wDcAUy3UIApwNkplAnDRQ4QayYsA9C4+LDHFJbAmExDhsHwHxGyOc0C4EBd8BoGhjwKBhwB4ymgQGPggF3wGgaGPAoGHAHjKaBAY+CAXfAaBogtXP1dhuVW8VkO6DnGnX6BaQ6AN4vGHAH0KtzOmj7hgBmzKW9AISKgAAAAABJRU5ErkJggg==';
-
-  private TLUpsideDownPipeTile =
-    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAHlJREFUWEdjZMABOL0Y/uOSo6Y444A7gF4+xeVRxkHjgOYe7G6csA9VvMCJtBQA04+uDyYOD4FRB4yGwGgIjIbAaAiMhsBoCIyGwGgIjIbAgIeAsBdxrV1yW8UE+wUD7gBcUUBcuJCvimC/gHyjidM5eLpmxLmX+qoAcXy9N/59tfoAAAAASUVORK5CYII=';
-
   private BRPipeTile =
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAHVJREFUWEdjlJnC8J+BAlDgBNE8YR+EhvFhRtaWQFjftzEwYrOGccg6gJDPaR4CA+4AmA8JOWQ0DdAsBAgFPc0T4WgaGPAoGHAHjKaBAY+CAXfAaBoY8CgYcAeMpoEBj4IBd8BoGhjwKBhwB4ymgQGPAmo5AABJAuAhmjuR3gAAAABJRU5ErkJggg==';
 
@@ -78,19 +71,17 @@ class Pipe extends GameObject {
 
     if (this.command == 'BOTTOM') {
       // TL
-      let tlPipe = new Image();
-      tlPipe.src = this.TLPipeTile;
-      ctx.drawImage(tlPipe, this.x, this.y, TILE_WIDTH, TILE_HEIGHT);
+      let tlPipe = Util.getTextureFromPiskel(TopLeftPipeTile);
+      ctx.drawImage(tlPipe.image, this.x, this.y, tlPipe.width, tlPipe.height);
 
       // TR
-      let trPipe = new Image();
-      trPipe.src = this.TRPipeTile;
+      let trPipe = Util.getTextureFromPiskel(TopRightPipeTile);
       ctx.drawImage(
-        trPipe,
-        this.x + TILE_WIDTH,
+        trPipe.image,
+        this.x + trPipe.width,
         this.y,
-        TILE_WIDTH,
-        TILE_HEIGHT
+        trPipe.width,
+        trPipe.height
       );
 
       for (let index = 0; index < this.tall; index++) {
@@ -142,25 +133,23 @@ class Pipe extends GameObject {
       }
 
       // TL
-      let tlPipe = new Image();
-      tlPipe.src = this.TLUpsideDownPipeTile;
+      let tlPipe = Util.getTextureFromPiskel(TopLeftUpsideDownPipeTile);
       ctx.drawImage(
-        tlPipe,
+        tlPipe.image,
         this.x,
-        this.y + this.tall * TILE_HEIGHT,
-        TILE_WIDTH,
-        TILE_HEIGHT
+        this.y + this.tall * tlPipe.width,
+        tlPipe.width,
+        tlPipe.height
       );
 
       // TR
-      let trPipe = new Image();
-      trPipe.src = this.TRUpsideDownPipeTile;
+      let trPipe = Util.getTextureFromPiskel(TopRightUpsideDownPipeTile);
       ctx.drawImage(
-        trPipe,
-        this.x + TILE_WIDTH,
-        this.y + this.tall * TILE_HEIGHT,
-        TILE_WIDTH,
-        TILE_HEIGHT
+        trPipe.image,
+        this.x + trPipe.width,
+        this.y + this.tall * trPipe.width,
+        trPipe.width,
+        trPipe.height
       );
     }
   }
@@ -485,6 +474,9 @@ class MainLevel extends Scene {
 
     this.bird = new Bird();
     this.add(this.bird);
+
+    this.anims.createFromPiskel('bird', FlappyBird);
+    this.anims.add('bird', this.bird);
 
     this.score = new Score();
     this.add(this.score);
